@@ -39,9 +39,10 @@ class Device:
     Identifier = ""
     HardwareType = ""
     Parent = ""
-    Sensors = list()
+    Sensors = None
 
     def __init__(self, device):
+        self.Sensors = list()
         self.Name = device.Name
         self.Identifier = device.Identifier
         self.HardwareType = device.HardwareType
