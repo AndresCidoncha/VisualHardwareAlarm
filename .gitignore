@@ -2,6 +2,12 @@
 Thumbs.db
 ehthumbs.db
 
+# Python
+__pycache__
+
+# OpenHardware
+OpenHardwareMonitor
+
 # Folder config file
 Desktop.ini
 
