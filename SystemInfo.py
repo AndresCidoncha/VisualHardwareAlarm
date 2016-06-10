@@ -11,10 +11,6 @@ class Sensor:
     SensorType = ""
     Parent = ""
     Index = -1
-    # Variables
-    Value = 0.0
-    Min = 0.0
-    Max = 0.0
 
     def __init__(self, sensor):
         self.Name = sensor.Name
