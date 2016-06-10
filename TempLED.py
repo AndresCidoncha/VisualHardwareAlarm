@@ -8,12 +8,14 @@ from time import sleep
 # You must change this for your Arduino VID:PID!!
 ARDUINO_ID = "1A86:7523"
 
-
 NORMAL = "0"
 THEATER_CHASE = "1"
 RAINBOW = "2"
 RAINBOW_CYCLE = "3"
 BREATHING = "4"
+
+RED = "255 0 0"
+ELECTRIC_BLUE = "0 255 255"
 
 def select_mode(load):
     if(load > 30):
@@ -23,7 +25,10 @@ def select_mode(load):
 
 
 def select_color(temp):
-    return "0 255 255"
+    if(temp > 50):
+        return RED
+    else:
+        return ELECTRIC_BLUE
 
 # Get the GPU's temperature sensor
 system = SystemInfo.SystemInfo()
