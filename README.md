@@ -71,3 +71,7 @@ The Arduino's code:
 ##Issues
 
 * Open Hardware Monitor don't get the temperature information of the most recents CPU families.
+
+##Licence
+
+Released under GNUv3 License.
