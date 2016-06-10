@@ -23,10 +23,7 @@ class Sensor:
     Parent = ""
     '''Parent device of the sensor. FE: /nvidiagpu/0/'''
     Index = -1
-<<<<<<< HEAD
     '''Index in the sensors array obtained by the WMI query'''
-=======
->>>>>>> origin/master
 
     def __init__(self, sensor):
         '''Constructor'''
