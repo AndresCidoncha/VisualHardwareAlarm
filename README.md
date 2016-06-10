@@ -49,6 +49,7 @@ The SystemInfo module will allow you to get in Python information about your har
 
 
 ##Requeriments
+* [OpenHardwareMonitor](http://openhardwaremonitor.org/) running
 * Python 3
 * Pyserial (*>=3.0*)
 * WMI python module (*>=1.4*)
@@ -66,3 +67,7 @@ The Arduino's code:
 * Use a little protocol based on integers.
 * Have 5 lighting effects: Permanent, Theatre Chase, Rainbow, Rainbow Circle and Breathing.
 * It's ready for any-long NeoPixels strip (You must change the *numLEDS* constant).
+
+##Issues
+
+* Open Hardware Monitor don't get the temperature information of the most recents CPU families.
