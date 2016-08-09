@@ -14,8 +14,9 @@ RAINBOW = "2"
 RAINBOW_CYCLE = "3"
 BREATHING = "4"
 
-RED = "255 0 0"
-ELECTRIC_BLUE = "0 255 255"
+RED = "125 0 0"
+ELECTRIC_BLUE = "0 125 125"
+
 
 def select_mode(load):
     if(load > 30):
@@ -47,12 +48,15 @@ arduino_list = serial.tools.list_ports.grep(ARDUINO_ID)
 for device in arduino_list:
     arduino_port = device.device
 
-ser = serial.Serial(arduino_port, 115200)
+ser = serial.Serial(arduino_port, 9600)
 
 try:
     n = 0
     m_load = 0
     m_temp = 0
+    command = "0 0 0 0"
+    ser.write(command.encode('UTF-8'))
+    sleep(2)
     while True:
         load = graphic_load_sensor.getValue()
         m_load += load
@@ -62,7 +66,7 @@ try:
         print("Load:", load, "%", "Temp:", temp, "Cº")
         command = select_mode(load) + ' ' + select_color(temp)
         ser.write(command.encode('UTF-8'))
-        sleep(3)
+        ser.read()
 
 except KeyboardInterrupt:
     print("Medium Load:", m_load/n, "%", "Medium Temp:", m_temp/n, "Cº")
