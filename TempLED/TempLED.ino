@@ -12,20 +12,10 @@
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(numLEDS, stripPIN, NEO_GRB + NEO_KHZ800);
 
 int obtenerNumero(){
-    int item=-1;
     int numero=0;
-    while(Serial.available()>0){
-        item=Serial.read();
-        Serial.print("ITEM: ");
-        Serial.println(item);
-        if(item==32){
-            break;
-        }
-        else{
-            numero*=10;
-            numero+=item-'0';
-        }
-    }
+    
+    numero=Serial.parseInt();
+    
     return numero;
 }
 
@@ -100,22 +90,30 @@ void rainbowCycle(uint8_t wait) {
 void breathing(int R, int G, int B, uint8_t wait){
     int nr=0, ng=0, nb=0;
     int limit=max(R,max(G,B));
-    for(int j=0; j<limit; j=j+2){
+    for(int j=0; j<limit; j=j++){
       if(nr<R)
-          nr+=2;
-      if(nr>255)
-          nr=255;
+          nr+=2;       
+
       if(ng<G)
           ng+=2;
-      if(ng>255)
-          ng=255;
+
       if(nb<B)
           nb+=2;
-      if(nb>255)
-          nb=255;
+                    
+      if(nr>R)
+          nr=R;
+          
+      if(ng>G)
+          ng=G;
+          
+      if(nb>B)
+          nb=B;
+
       for(int i=0; i< strip.numPixels(); i++) {
           colorWipe(strip.Color(nr,ng,nb),wait);
       }
+      if(nr==R && ng==G && nb==B)
+          break;
     }
     for(int j=limit; j>0; j--){
       if(nr>0)
@@ -130,9 +128,13 @@ void breathing(int R, int G, int B, uint8_t wait){
           nb-=2;
       if(nb<0)
           nb=0;
+          
       for(int i=0; i< strip.numPixels(); i++) {
           colorWipe(strip.Color(nr,ng,nb),wait);
       }
+      
+      if(nr==0 && ng==0 && nb==0)
+          break;
     }
 }
 
@@ -140,15 +142,15 @@ void procesacomando(){
    int modo;
    int color[3]={-1,-1,-1};
    modo=obtenerNumero();
-   Serial.print("modo: ");
-   Serial.println(modo);
+   /*Serial.print("modo: ");
+   Serial.println(modo);*/
         
     for(int i=0; i<3; i++){
         color[i]=obtenerNumero();
-        Serial.print("Color ");
+        /*Serial.print("Color ");
         Serial.print(i);
         Serial.print(": ");
-        Serial.println(color[i]);
+        Serial.println(color[i]);*/
         if(color[i]>255)
             color[i]=255;
     }
@@ -156,52 +158,72 @@ void procesacomando(){
     switch(modo){
         case NORMAL:{
             colorWipe(strip.Color(color[0],color[1],color[2]),0);
-            Serial.println("Done");
+            Serial.flush();
+            Serial.print(0);
             break;
         }
             
         case THEATER_CHASE:{
             theaterChase(strip.Color(color[0],color[1],color[2]),100);
-            Serial.println("Done");
+            Serial.flush();
+            Serial.print(0);
             break;
         }
 
         case RAINBOW:{
             rainbow(20);
-            Serial.println("Done");
+            Serial.flush();
+            Serial.print(0);
             break;
         }
 
         case RAINBOW_CYCLE:{
             rainbowCycle(20);
-            Serial.println("Done");
+            Serial.flush();
+            Serial.print(0);
             break;
         }
 
         case BREATHING:{
             breathing(color[0],color[1],color[2],0);
-            Serial.println("Done");
+            Serial.flush();
+            Serial.print(0);
             break;
         }
 
         default:{
             colorWipe(strip.Color(0,0,0),0);
-            Serial.println("Done");
+            Serial.flush();
+            Serial.print(0);
             break;
         }
       }
 }
 
+bool unattended;
+unsigned long tiempo=0;
+
 void setup() {
-    Serial.begin(115200); // start serial for output 
+    Serial.begin(9600); // start serial for output 
+    while(!Serial);
     Serial.flush();
+    Serial.setTimeout(200);
     strip.begin();
-    colorWipe(strip.Color(0,0,0),0);
+    unattended=true;
 }
 
 //==============================LOOP=============================
 void loop() {
     if(Serial.available()){      //Si nos han mandado algo por serial
+        tiempo=millis();
+        colorWipe(strip.Color(0,0,0),0);
+        unattended=false;
         procesacomando();       //Procesamos el comando
+    }
+    if(unattended==true){
+        breathing(0,125,125,1);
+    }
+    else if((millis()-tiempo)>30000){
+        unattended=true;
     }
 }
