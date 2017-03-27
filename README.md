@@ -1,6 +1,6 @@
-# SystemInfo
+# VisualHardwareAlarm
 
-The SystemInfo module will allow you to get in Python information about your hardware, and work with it.
+The SystemInfo module will allow you to get in Python information about your hardware, and work with it. The *TempLED.py* script allows you to build custom illumination systems based on Adafruit NeoPixels strips and Arduino. This script will get the GPU's temperature and load, and will send to the Arduino a lighting command based on the obtained values.
 
 **SystemInfo class:**
 
@@ -56,9 +56,6 @@ The SystemInfo module will allow you to get in Python information about your har
 * Pywin32 (*>=220*)
 
 ## Custom Illumination System
-
-The *TempLED.py* script allows you to build custom illumination systems based on Adafruit NeoPixels strips and Arduino. This script will
-get the GPU's temperature and load, and will send to the Arduino a lighting command based on the obtained values.
 
 The script will search for the Arduino port automatic, for that, you must change the *VID:PID* value for the value of your Arduino. 
 
