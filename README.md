@@ -48,14 +48,14 @@ The SystemInfo module will allow you to get in Python information about your har
 *The Sensor class have attributes for get the values because you must do the WMI query to get the updated value*
 
 
-##Requeriments
+## Requeriments
 * [OpenHardwareMonitor](http://openhardwaremonitor.org/) running
 * Python 3
 * Pyserial (*>=3.0*)
 * WMI python module (*>=1.4*)
 * Pywin32 (*>=220*)
 
-##Custom Illumination System
+## Custom Illumination System
 
 The *TempLED.py* script allows you to build custom illumination systems based on Adafruit NeoPixels strips and Arduino. This script will
 get the GPU's temperature and load, and will send to the Arduino a lighting command based on the obtained values.
@@ -68,10 +68,10 @@ The Arduino's code:
 * Have 5 lighting effects: Permanent, Theatre Chase, Rainbow, Rainbow Circle and Breathing.
 * It's ready for any-long NeoPixels strip (You must change the *numLEDS* constant).
 
-##Issues
+## Issues
 
 * Open Hardware Monitor don't get the temperature information of the most recents CPU families.
 
-##Licence
+## Licence
 
 Released under GNUv3 License.
